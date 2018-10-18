@@ -1,0 +1,45 @@
+Google Voice Kit Edits
+
+>> 
+Edit Config File
+
+sudo leafpad /boot/config.txt
+
+dtparam=aduio=on
+#dtoverlay=i2s-mmap
+#dtoverlay=googlevoicechat-soundcard
+
+>> 
+Edit asound.conf
+
+sudo leafpad /etc/asound.conf
+
+Replace with the contents below
+
+
+pcm.!default {
+  type asym
+  capture.pcm "mic"
+  playback.pcm "speaker"
+}
+pcm.mic {
+  type plug
+  slave {
+    pcm "hw:1,0"
+  }
+}
+pcm.speaker {
+  type plug
+  slave {
+    pcm "hw:0,0"
+  }
+}
+
+>> 
+Edit check_audio.py file
+
+sudo leafpad /home/pi/voice-recognizer-raspi/checkpoints/check_audio.py
+
+ In here change
+
+ VOICEHAT_ID = 'bcm2835'
